@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import "../../styles/createPost.css";
@@ -29,11 +29,16 @@ export const CreatePost = () => {
         }
         const success = await actions.createPost(image, message, location, status);
         if (success) {
+            actions.fetchPosts();
             navigate("/posts");
         } else {
             setError("Failed to create post. Please try again.");
         }
     };
+
+    useEffect(() => {
+        actions.fetchPosts();
+    }, []);
 
     return (
         <div className="create-post-container">
