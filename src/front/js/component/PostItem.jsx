@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
+import "../../styles/postItem.css";
 
 const PostItem = ({ post }) => {
     const { actions } = useContext(Context);
@@ -17,14 +18,14 @@ const PostItem = ({ post }) => {
                 <img src={post.author.avatar} alt={`${post.author.username}'s avatar`} className="avatar" />
                 <div className="post-author">
                     <span>{post.author.username}</span>
-                    <span className="post-location">{post.location}</span>
+                    <span className="post-location mx-2">{post.location}</span>
                 </div>
             </div>
             <img src={post.image} alt="Post" className="post-image" />
             <div className="post-content">
                 <div className="post-info">
                     <span>{post.author.username}</span>
-                    <span>{post.message}</span>
+                    <span className="mx-2 mt-2">{post.message}</span>
                 </div>
                 <div className="post-footer">
                     <span className="post-date">{new Date(post.created_at).toLocaleString()}</span>

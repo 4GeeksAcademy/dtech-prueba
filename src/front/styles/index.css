@@ -1,3 +1,43 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+/* Fondo global para la aplicación */
+body {
+    background-image: url('https://i.pinimg.com/736x/2f/5f/9a/2f5f9a16d7a5170a4690185f5e15e679.jpg'); /* URL de la imagen de fondo */
+    background-size: cover; /* Cubrir todo el fondo */
+    background-position: center; /* Centrar la imagen de fondo */
+    background-repeat: no-repeat; /* No repetir la imagen */
+    background-attachment: fixed; /* Fondo fijo al hacer scroll */
+    color: #f8f9fa; /* Color del texto claro para el tema oscuro */
+    font-family: 'Roboto', sans-serif;
+    margin: 0; /* Eliminar márgenes */
+    padding: 0; /* Eliminar rellenos */
+    min-height: 100vh; /* Altura mínima de la ventana gráfica */
+}
+
+/* Estilos del navbar */
+.navbar {
+    background-color: rgba(52, 58, 64, 0.8); /* Fondo del navbar semi-transparente */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Borde inferior del navbar */
+}
+
+/* Otros ajustes globales */
+.container-fluid, .auth-container, .posts-container {
+    background: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente para los contenedores */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 20px; /* Relleno interior */
+    margin: 20px auto; /* Margen alrededor */
+}
+
+/* Ajustes específicos para el login y register */
+.auth-card {
+    background-color: rgba(52, 58, 64, 0.8); /* Fondo semi-transparente */
+}
+
+/* Ajustes específicos para las publicaciones */
+.post-item {
+    background-color: rgba(52, 58, 64, 0.8); /* Fondo semi-transparente */
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}

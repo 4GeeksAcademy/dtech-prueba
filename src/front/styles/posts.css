@@ -19,6 +19,19 @@
     text-align: left;
 }
 
+.post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.avatar {
+    width: 40px; /* Tamaño del avatar */
+    height: 40px; /* Tamaño del avatar */
+    border-radius: 50%; /* Hacer el avatar redondo */
+    margin-right: 10px;
+}
+
 .post-image {
     width: 100%;
     height: auto;

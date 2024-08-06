@@ -1,17 +1,25 @@
 /* createPost.css */
 
+body {
+    background-color: #343a40; /* Fondo oscuro */
+    color: #f8f9fa; /* Texto claro */
+    font-family: 'Roboto', sans-serif;
+}
+
 .create-post-container {
     max-width: 600px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: #495057; /* Fondo gris oscuro */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #f8f9fa; /* Texto claro */
 }
 
 .create-post-container h2 {
     text-align: center;
     margin-bottom: 20px;
+    color: #f8f9fa; /* Texto claro */
 }
 
 .form-group {
@@ -22,6 +30,7 @@
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+    color: #f8f9fa; /* Texto claro */
 }
 
 .form-group input,
@@ -29,8 +38,18 @@
 .form-group select {
     width: 100%;
     padding: 10px;
+    background-color: #6c757d; /* Fondo gris oscuro */
     border: 1px solid #ddd;
     border-radius: 5px;
+    color: #f8f9fa; /* Texto claro */
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    background-color: #6c757d; /* Fondo gris oscuro */
+    border-color: #adb5bd; /* Borde gris claro */
+    outline: none;
 }
 
 .form-group textarea {
@@ -40,15 +59,16 @@
 button {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #007bff; /* Botón azul */
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
 }
 
 .error {

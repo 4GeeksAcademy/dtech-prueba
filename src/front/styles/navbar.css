@@ -1,46 +1,85 @@
-/* navbar.css */
-
+/* General Navbar Styling */
 .navbar {
-    background-color: #343a40;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #f8f9fa;
-}
-
-.navbar-container {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+    background-color: #343a40; /* Dark background */
 }
 
 .navbar-brand {
-    color: #f8f9fa;
-    text-decoration: none;
+    color: #f8f9fa; /* Light text */
     font-size: 1.5rem;
+    font-weight: bold;
 }
 
-.navbar-menu {
+.navbar-nav .nav-link {
+    color: #f8f9fa; /* Light text */
+    margin-right: 1rem;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #adb5bd; /* Light gray on hover */
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler-icon {
+    color: #f8f9fa; /* Light icon */
+}
+
+.navbar-collapse {
+    justify-content: space-between;
+}
+
+.dropdown-menu {
+    background-color: #343a40; /* Dark background */
+    border: none;
+}
+
+.dropdown-item {
+    color: #f8f9fa; /* Light text */
+}
+
+.dropdown-item:hover {
+    background-color: #495057; /* Slightly lighter background on hover */
+    color: #f8f9fa;
+}
+
+/* SearchBar Styling */
+.search-bar {
     display: flex;
     align-items: center;
+    margin-right: 1rem;
 }
 
-.navbar-item {
-    color: #f8f9fa;
-    text-decoration: none;
-    margin-left: 20px;
-    cursor: pointer;
+.search-bar input[type="text"] {
+    background-color: #495057; /* Dark background */
+    color: #f8f9fa; /* Light text */
+    border: 1px solid #6c757d; /* Border color */
+    border-radius: 5px;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
 }
 
-.logout-button {
-    background: none;
+.search-bar input[type="text"]:focus {
+    background-color: #6c757d; /* Slightly lighter background */
+    color: #f8f9fa; /* Light text */
+    border-color: #adb5bd; /* Light gray border */
+    outline: none;
+}
+
+.search-bar button {
+    background-color: #007bff; /* Blue button */
+    color: #f8f9fa; /* Light text */
     border: none;
-    color: #f8f9fa;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 1rem;
 }
 
-.logout-button:hover {
-    color: #e74c3c;
+.search-bar button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.search-bar button:focus {
+    outline: none;
 }

@@ -3,12 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
-import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
-
-import { Footer } from "./component/footer";
 
 import { Login } from './pages/Login.jsx';
 import { Register } from './pages/Register.jsx';
@@ -18,6 +13,7 @@ import { UserPosts } from './pages/UserPosts.jsx';
 import { UserProfile } from './pages/UserProfile.jsx';
 
 import { Navbar } from './component/Navbar.jsx';
+import { Footer } from "./component/Footer.jsx";
 
 //create your first component
 const Layout = () => {
@@ -33,15 +29,13 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
+                        <Route  path="/" element={<Login/>}/>
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/posts" element={<Posts />} />
                         <Route path="/create-post" element={<CreatePost />} />
                         <Route path="/user-posts" element={<UserPosts />} />
                         <Route path="/profile" element={<UserProfile />} />
-                        <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

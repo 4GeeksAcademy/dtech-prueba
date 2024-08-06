@@ -106,8 +106,15 @@ def like_post(post_id):
 @jwt_required()
 def search_posts():
     term = request.args.get('term', '')
-    posts = Post.query.filter(Post.message.ilike(f'%{term}%')).order_by(Post.created_at.desc()).all()
+    posts = Post.query.join(User).filter(
+        (Post.message.ilike(f'%{term}%')) |
+        (Post.location.ilike(f'%{term}%')) |
+        (Post.created_at.cast(db.String).ilike(f'%{term}%')) |
+        (User.username.ilike(f'%{term}%'))
+    ).order_by(Post.created_at.desc()).all()
     return jsonify([post.serialize() for post in posts]), 200
+
+
 
 
 @api.route('/posts/export', methods=['GET'])
