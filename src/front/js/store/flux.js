@@ -2,8 +2,9 @@ const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
             token: localStorage.getItem("token") || null,
-            user: null,
-            posts: []
+            user: localStorage.getItem("user") || null,
+            posts: [],
+			userPosts: []
         },
         actions: {
             register: async formData => {
@@ -153,6 +154,26 @@ const getState = ({ getStore, getActions, setStore }) => {
                 } catch (error) {
                     console.error('Error:', error);
                     return false;
+                }
+            },
+
+			fetchUserPosts: async () => {
+                const store = getStore();
+                try {
+                    const response = await fetch('https://refactored-disco-xgx4rqr6pwv26g7-3001.app.github.dev/api/user/posts', {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${store.token}`
+                        }
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        setStore({ userPosts: data });
+                    } else {
+                        console.error('Error fetching user posts');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
                 }
             },
 

@@ -67,7 +67,7 @@ def create_post():
     db.session.commit()
     return jsonify({'message': 'Post created successfully!'}), 201
 
-@api.route('/posts', methods=['GET'])
+@api.route('/user/posts', methods=['GET'])
 @jwt_required()
 def get_posts():
     current_user_id = get_jwt_identity()  # Obtiene el ID del usuario autenticado

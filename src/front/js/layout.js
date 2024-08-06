@@ -15,7 +15,7 @@ import { Login } from './pages/Login.jsx';
 import { Register } from './pages/Register.jsx';
 import { Posts } from './pages/Posts.jsx';
 import { CreatePost }  from './pages/CreatePost.jsx';
-
+import { UserPosts } from './pages/UserPosts.jsx';
 
 //create your first component
 const Layout = () => {
@@ -35,6 +35,7 @@ const Layout = () => {
                         <Route path="/register" element={<Register />} />
                         <Route path="/posts" element={<Posts />} />
                         <Route path="/create-post" element={<CreatePost />} />
+                        <Route path="/user-posts" element={<UserPosts />} />
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
