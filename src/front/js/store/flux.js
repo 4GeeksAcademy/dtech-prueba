@@ -66,20 +66,20 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
             getUserInfo: async () => {
-                let myToken = localStorage.getItem("token");
+                const store = getStore();
                 try {
                     const response = await fetch("https://refactored-disco-xgx4rqr6pwv26g7-3001.app.github.dev/api/user", {
                         method: "GET",
                         headers: {
                             "Content-Type": "application/json",
-                            "Authorization": `Bearer ${myToken}`,
+                            "Authorization": `Bearer ${store.token}`,
                         }
                     });
 
                     if (response.ok) {
                         const data = await response.json();
-                        console.log(data);
-                        return data; // Solo retornar los datos obtenidos
+                        setStore({ user: data });
+                        return data;
                     } else {
                         throw new Error("Error fetching user info");
                     }

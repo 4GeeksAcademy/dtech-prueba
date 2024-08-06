@@ -78,6 +78,7 @@ def create_post():
 def get_all_posts():
     posts = Post.query.order_by(Post.created_at.desc()).all()
     return jsonify([post.serialize() for post in posts]), 200
+    
 
 @api.route('/user/posts', methods=['GET'])
 @jwt_required()
