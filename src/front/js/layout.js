@@ -8,7 +8,6 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
 import { Login } from './pages/Login.jsx';
@@ -16,6 +15,8 @@ import { Register } from './pages/Register.jsx';
 import { Posts } from './pages/Posts.jsx';
 import { CreatePost }  from './pages/CreatePost.jsx';
 import { UserPosts } from './pages/UserPosts.jsx';
+
+import { Navbar } from './component/Navbar.jsx';
 
 //create your first component
 const Layout = () => {

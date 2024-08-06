@@ -48,14 +48,17 @@ const getState = ({ getStore, getActions, setStore }) => {
                         body: JSON.stringify(loginData)
                     });
 
-                    if (response.ok) {
+                    if (response.headers.get("content-type").includes("application/json")) {
                         const data = await response.json();
-                        localStorage.setItem("token", data.access_token);
-                        setStore({ token: data.access_token, user: loginData.username });
-                        return { success: true, error: null };
+                        if (response.ok) {
+                            localStorage.setItem("token", data.access_token);
+                            setStore({ token: data.access_token, user: loginData.username });
+                            return { success: true, error: null };
+                        } else {
+                            return { success: false, error: data.error };
+                        }
                     } else {
-                        const errorData = await response.json();
-                        return { success: false, error: errorData.error };
+                        throw new Error("Response is not JSON");
                     }
                 } catch (error) {
                     return { success: false, error: "Request error: " + error.message };
@@ -122,10 +125,17 @@ const getState = ({ getStore, getActions, setStore }) => {
                         }
                     });
                     if (response.ok) {
-                        const data = await response.json();
-                        setStore({ posts: data });
+                        if (response.headers.get("content-type").includes("application/json")) {
+                            const data = await response.json();
+                            setStore({ posts: data });
+                        } else {
+                            console.error('Response is not JSON');
+                            const errorText = await response.text();
+                            console.error('Response text:', errorText);
+                        }
                     } else {
-                        console.error('Error fetching posts');
+                        const errorData = await response.json();
+                        console.error('Error fetching posts:', errorData);
                     }
                 } catch (error) {
                     console.error('Error:', error);
@@ -179,6 +189,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             logout: () => {
                 localStorage.removeItem('token');
+				localStorage.removeItem('user');
                 setStore({ token: null, user: null, posts: [] });
             }
         }

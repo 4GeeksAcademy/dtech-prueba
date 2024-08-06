@@ -44,11 +44,17 @@ def register():
 @api.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    user = User.query.filter_by(username=data['username']).first()
-    if user and bcrypt.checkpw(data['password'].encode('utf-8'), user.password.encode('utf-8')):
-        access_token = create_access_token(identity=user.id)
-        return jsonify({'message': 'Login successful!', 'access_token': access_token}), 200
-    return jsonify({'message': 'Invalid credentials!'}), 401
+    username = data.get('username')
+    password = data.get('password')
+
+    user = User.query.filter_by(username=username).first()
+
+    if user is None or not bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
+        return jsonify({"error": "Invalid username or password"}), 401
+
+    access_token = create_access_token(identity=user.id)
+    return jsonify({"access_token": access_token}), 200
+
 
 
 @api.route('/posts', methods=['POST'])
@@ -66,6 +72,12 @@ def create_post():
     db.session.add(new_post)
     db.session.commit()
     return jsonify({'message': 'Post created successfully!'}), 201
+
+@api.route('/posts', methods=['GET'])
+@jwt_required()
+def get_all_posts():
+    posts = Post.query.order_by(Post.created_at.desc()).all()
+    return jsonify([post.serialize() for post in posts]), 200
 
 @api.route('/user/posts', methods=['GET'])
 @jwt_required()
