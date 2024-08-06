@@ -3,7 +3,13 @@ import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
 
 const PostItem = ({ post }) => {
+    const { actions } = useContext(Context);
 
+    const handleLike = async () => {
+        await actions.likePost(post.id);
+        // Actualiza la lista de publicaciones para reflejar el nuevo like
+        actions.fetchPosts();
+    };
 
     return (
         <div className="post-item">
@@ -22,7 +28,7 @@ const PostItem = ({ post }) => {
                 </div>
                 <div className="post-footer">
                     <span className="post-date">{new Date(post.created_at).toLocaleString()}</span>
-                    <button className="like-button">❤️ {post.likes.length}</button>
+                    <button className="like-button" onClick={handleLike}>❤️ {post.likes.length}</button>
                 </div>
             </div>
         </div>
@@ -31,6 +37,7 @@ const PostItem = ({ post }) => {
 
 PostItem.propTypes = {
     post: PropTypes.shape({
+        id: PropTypes.number.isRequired,
         image: PropTypes.string.isRequired,
         message: PropTypes.string.isRequired,
         likes: PropTypes.array.isRequired,
