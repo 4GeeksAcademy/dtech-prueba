@@ -9,7 +9,7 @@ class User(db.Model):
     password = db.Column(db.String(80), unique=False, nullable=False)
     name = db.Column(db.String(120), unique=True, nullable=True)
     surname = db.Column(db.String(120), unique=True, nullable=True)
-    avatar = db.Column(db.String(120), unique=True, nullable=True)
+    avatar = db.Column(db.String(512), unique=True, nullable=True)
 
     posts = db.relationship('Post', backref='author', lazy=True)
     likes = db.relationship('PostLike', backref='user', lazy=True)
