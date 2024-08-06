@@ -4,7 +4,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             token: localStorage.getItem("token") || null,
             user: localStorage.getItem("user") || null,
             posts: [],
-			userPosts: []
+			userPosts: [],
+			searchResults: []
         },
         actions: {
             register: async formData => {
@@ -24,9 +25,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                         console.log("Form sent successfully");
                         return { success: true };
                     } else {
-                        if (data.error === 'Email already exists.') {
-                            console.error("Email already exists.");
-                            return { success: false, error: 'Email already exists.' };
+                        if (data.error === 'User already exists.') {
+                            console.error("User already exists.");
+                            return { success: false, error: 'User already exists.' };
                         } else {
                             console.error("Error submitting form:", data.error || data.message);
                             return { success: false, error: data.error || data.message };
@@ -155,6 +156,29 @@ const getState = ({ getStore, getActions, setStore }) => {
                     if (response.ok) {
                         const data = await response.json();
                         console.log(data.message);
+                        
+                        // Actualizar el número de likes en el estado
+                        const updatedPosts = store.posts.map(post => {
+                            if (post.id === postId) {
+                                return {
+                                    ...post,
+                                    likes: [...post.likes, store.user] // Agregar el usuario actual a la lista de likes
+                                };
+                            }
+                            return post;
+                        });
+
+                        const updatedSearchResults = store.searchResults.map(post => {
+                            if (post.id === postId) {
+                                return {
+                                    ...post,
+                                    likes: [...post.likes, store.user] // Agregar el usuario actual a la lista de likes
+                                };
+                            }
+                            return post;
+                        });
+
+                        setStore({ posts: updatedPosts, searchResults: updatedSearchResults });
                         return true;
                     } else {
                         const errorData = await response.json();
@@ -181,6 +205,80 @@ const getState = ({ getStore, getActions, setStore }) => {
                         setStore({ userPosts: data });
                     } else {
                         console.error('Error fetching user posts');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            },
+
+			searchPosts: async (searchTerm) => {
+                const store = getStore();
+                try {
+                    const response = await fetch(`https://refactored-disco-xgx4rqr6pwv26g7-3001.app.github.dev/api/posts/search?term=${searchTerm}`, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${store.token}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        setStore({ searchResults: data });
+                    } else {
+                        const errorData = await response.json();
+                        console.error('Error searching posts:', errorData);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            },
+
+			exportPosts: async () => {
+                const store = getStore();
+                try {
+                    const response = await fetch('https://refactored-disco-xgx4rqr6pwv26g7-3001.app.github.dev/api/posts/export', {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${store.token}`
+                        }
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = 'posts.json';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    } else {
+                        console.error('Error exporting posts');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            },
+
+            importPosts: async (file) => {
+                const store = getStore();
+                try {
+                    const formData = new FormData();
+                    formData.append('file', file);
+
+                    const response = await fetch('https://refactored-disco-xgx4rqr6pwv26g7-3001.app.github.dev/api/posts/import', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${store.token}`
+                        },
+                        body: formData
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log(data.message);
+                    } else {
+                        const errorData = await response.json();
+                        console.error('Error importing posts:', errorData);
                     }
                 } catch (error) {
                     console.error('Error:', error);

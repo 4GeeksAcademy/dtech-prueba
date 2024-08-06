@@ -7,7 +7,7 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 import bcrypt
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
-
+from datetime import datetime
 
 api = Blueprint('api', __name__)
 
@@ -101,3 +101,38 @@ def like_post(post_id):
     db.session.add(new_like)
     db.session.commit()
     return jsonify({'message': 'Post liked successfully!'}), 201
+
+@api.route('/posts/search', methods=['GET'])
+@jwt_required()
+def search_posts():
+    term = request.args.get('term', '')
+    posts = Post.query.filter(Post.message.ilike(f'%{term}%')).order_by(Post.created_at.desc()).all()
+    return jsonify([post.serialize() for post in posts]), 200
+
+
+@api.route('/posts/export', methods=['GET'])
+@jwt_required()
+def export_posts():
+    current_user_id = get_jwt_identity()
+    posts = Post.query.filter_by(author_id=current_user_id).all()
+    posts_data = [post.serialize() for post in posts]
+    return jsonify(posts_data), 200
+
+@api.route('/posts/import', methods=['POST'])
+@jwt_required()
+def import_posts():
+    current_user_id = get_jwt_identity()
+    data = request.get_json()
+    for post_data in data:
+        new_post = Post(
+            image=post_data['image'],
+            message=post_data['message'],
+            author_id=current_user_id,
+            location=post_data['location'],
+            status=post_data['status'],
+            created_at=datetime.strptime(post_data['created_at'], '%Y-%m-%dT%H:%M:%S.%f')
+        )
+        db.session.add(new_post)
+    db.session.commit()
+    return jsonify({'message': 'Posts imported successfully!'}), 201
+
