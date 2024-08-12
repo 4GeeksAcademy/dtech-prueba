@@ -1,0 +1,27 @@
+.search-bar {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto; /* Centramos el SearchBar */
+}
+
+.search-bar input[type="text"] {
+    width: 100%;
+    background-color: #495057; /* Fondo oscuro */
+    color: #f8f9fa; /* Texto claro */
+    border: 1px solid #6c757d; /* Borde */
+    border-radius: 20px; /* Borde redondeado */
+    outline: none;
+}
+
+.search-bar input[type="text"]::placeholder {
+    color: #adb5bd; /* Color del placeholder */
+}
+
+.search-bar .search-icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #adb5bd; /* Color del icono */
+}

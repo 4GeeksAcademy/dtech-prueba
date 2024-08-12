@@ -1,0 +1,40 @@
+/* Estilo del contenedor de la publicación */
+.post-item {
+    background-color: rgba(52, 58, 64, 0.8); /* Fondo semi-transparente */
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Estilo del encabezado de la publicación */
+.post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Estilo del avatar del autor */
+.avatar {
+    width: 40px; /* Tamaño del avatar */
+    height: 40px; /* Tamaño del avatar */
+    border-radius: 50%; /* Hacer el avatar redondo */
+    margin-right: 10px;
+}
+
+/* Estilo del contenido de la publicación */
+.post-content {
+    margin-top: 10px;
+}
+
+/* Estilo de la información del post */
+.post-info {
+    display: flex;
+    align-items: center;
+}
+
+/* Estilo del pie de la publicación */
+.post-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
